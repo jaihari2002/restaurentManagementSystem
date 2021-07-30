@@ -1,0 +1,29 @@
+<%layout('boilerplate')%>
+<h1>MY BAG</h1>
+<% var price=0%>
+<% for(i of bagItem){%> 
+    <div class>
+        <form action="/details/<%=i._id%>" method="GET">
+            <button>
+                <img src="<%=i.url%>" alt=""> 
+                <p><%=i.itemname%> </p> 
+                <p><%=i.manufacturerName%> 
+                <span> Rating <%=i.rating%></span>
+                </p>
+                <p><%=i.price%> </p>
+            </button>
+        </form> 
+        <form method="POST" action="/deleteBag/<%=i._id%>?_method=DELETE" >
+            <button name="id" value=<%=i._id%>>DELETE</button>
+        </form>
+        <%price=price+i.price%>
+    </div>
+<% }%> 
+<div>
+<%if(price!==0) {%>
+<p>Thank You For Shopping With Us!<p>
+<p>Your Total Price $<%=price%></p>
+<%}%>
+</div>
+<a href="/home" >Home</a>
+<form action="/logout" method="GET"><button >Logout</button></form>

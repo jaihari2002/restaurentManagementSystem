@@ -1,0 +1,39 @@
+<%layout('boilerplate')%>
+        <h1>UPDATE ITEM</h1>
+
+
+
+
+
+        <form action="/updateitem/<%=item._id%>?_method=PUT" method="POST">
+            <label for="itemname">Name</label><br>
+            <input type="text" id="itemname" name="itemname" placeholder="Enter Item Name" value="<%=item.itemname%>"><br>
+            <label for="manufacturerName">Manufacturer</label><br>
+            <input type="text" id="manufacturerName" name="manufacturerName" placeholder="Enter Manufacturer Name" value="<%=item.manufacturerName%>"><br>
+            <label for="category">Category</label>
+            <select name="category" value="<%=item.category%>" id="category">
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+            </select>
+            <label for="rating">Rating</label>
+            <select name="rating" id="rating" value="<%=item.rating%>">
+                <option value="5.0">5.0</option>
+                <option value="4.0">4.0</option>
+                <option value="3.0">3.0</option>
+                <option value="2.0">2.0</option>
+                <option value="1.0">1.0</option>
+            </select>
+            <label for="price">Price</label>
+            <input type="text" id="price" name="price" placeholder="10" value="<%=item.price%>">
+            <br>
+            <label for="url">Image URL</label><br>
+            <input type="text" id="url" name="url" placeholder="Enter Image URL" value="<%=item.url%>"><br>
+            <label for="about">About</label><br>
+            <textarea id="about" name="about" rows="4" cols="50" placeholder="About Item" ><%=item.about%></textarea><br>
+            <button type='submit'>UPDATE</button>
+            <a href="/home" class="btn">CANCEL</a>
+        </form>
+
+
+        
+        <form action="/logout" method="GET"><button class='btn btn-danger'>Logout</button></form>

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+*{
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+}
+section{
+   max-height: 100vh;
+   position: relative !important;
+}
+.error{
+    color:#D64D4D;
+    text-align: left;
+font: normal normal bold 18px/24px Open Sans;
+letter-spacing: 0.18px;
+height: 24px;
+font-size: 14px;
+}
+#new{
+    margin-top: 5% !important;
+    margin-left: 10% !important;
+    position: absolute !important;
+       width: 80% !important;
+       height: 80% !important;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: rgb(255, 255, 255,0.2);
+     backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    z-index: -5 !important;
+    fill-opacity: 0% !important;
+}
+
+#home-page{
+  background-image: url(img/login_register.jpg);
+  background-repeat: no-repeat !important;
+  /* background-position: center; */
+ background-size: cover !important;
+ height: 100% !important;
+    max-width:100% !important;
+   min-height:100vh !important;
+   z-index: 0 !important;
+   object-fit: contain !important;
+  
+}  
+
+.a2img2{
+    align-items: center !important;
+   
+
+} 
+form{
+    align-items: center !important;
+     width: 23%;
+     z-index: 100 !important;
+     fill-opacity: 1 !important;
+}
+
+input[type=text], input[type=password] {
+    padding: 5px 10px 5px 20px !important;
+    border-radius:10px 10px 0px 0px !important;
+    text-align: left;
+    opacity: 1;
+    
+}
+.a1btn1{
+    background-color: #237DB6!important ;
+    outline: none !important;
+    
+    border:#237DB6 !important;
+    border-radius: 30px;
+    color: white;
+    padding: 10px !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    
+}
+.a2img2{
+    align-items: center !important;
+     text-align: center !important;
+     margin-left: 40% !important;
+     opacity: 1 !important;
+     width:19% !important;
+}
+a{
+    color: #237DB6 !important;
+    margin-left: 1px;
+}
+.a1text1{
+    font-size: 12px;
+    margin-top:8% !important;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+@media only screen and (max-width: 780px) {
+    form{
+        width: 80%;
+    }
+    .img2{
+        width: 80% !important;
+        margin-left: 20% !important;
+    }
+  }
