@@ -1,22 +1,185 @@
 <%layout('boilerplate')%>
-        <h1>UPDATE ITEM</h1>
+        
+<h6 style="display:inline;color:white; margin-left:15px; ">Hello,</h6><h3 style="display:inline;color:white ; " ><%=user.username%> </h3>
+        
+        <section class="right">
+            <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
+            <div class="circleBox" style="margin:29px;"> 
+                <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
+                <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
+            </div>
+            <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
+            <form action="/additem" method="GET"><button style="color:#237DB6;" class="addBtn">ADD ITEM</button></form> 
+        </section>
 
 
 
-
+        <div class='containerOuter'>
+        <h7 style="display:inline;color:white ;  margin-left:40px; position:absolute; margin-top:8px;" >UPDATE ITEM</h7>
 
         <form action="/updateitem/<%=item._id%>?_method=PUT" method="POST">
-            <label for="itemname">Name</label><br>
-            <input type="text" id="itemname" name="itemname" placeholder="Enter Item Name" value="<%=item.itemname%>"><br>
+            <label style="margin-top:38px;" for="itemname" >Name</label><br>
+            <input type="text" id="itemname" name="itemname" placeholder="Enter Item Name" class="border-curve" value="<%=item.itemname%>" required><br>
             <label for="manufacturerName">Manufacturer</label><br>
-            <input type="text" id="manufacturerName" name="manufacturerName" placeholder="Enter Manufacturer Name" value="<%=item.manufacturerName%>"><br>
+            <input type="text" id="manufacturerName" name="manufacturerName" placeholder="Enter Manufacturer Name" class="border-curve" value="<%=item.manufacturerName%>" required><br>
+
+
+            <label for="category"style="margin-left:50px;" class="labelLine">Category</label>
+            <label for="rating" class="labelLine">Rating</label>
+            <label for="price" class="labelLine">Price</label>
+            <br>
+
+            <select style="  margin-left:40px;" name="category" id="category"  class="border-curve inputLine" style="margin-left:0px;" value="<%=item.category%>" required>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+            </select>
+           
+            <select name="rating" id="rating" class="border-curve inputLine" value="<%=item.rating%>" required>
+                <option value="5.0">5.0</option>
+                <option value="4.0">4.0</option>
+                <option value="3.0">3.0</option>
+                <option value="2.0">2.0</option>
+                <option value="1.0">1.0</option>
+            </select>
+           
+            <input type="text" id="price" name="price" placeholder="10" class="border-curve inputLine" value="<%=item.price%>"required>
+            
+            <br>
+            <label for="url">Image URL</label><br>
+            <input style="width:640px;" type="text" id="url" name="url" placeholder="Enter Image URL" class="border-curve" value="<%=item.url%>" required><br>
+            <label for="about">About</label><br>
+            <textarea style="width:640px;  margin-left:40px;"  id="about" name="about" rows="4" cols="50" placeholder="About Item" class="border-curve" required> <%=item.about%></textarea><br>
+            <button class="btns">ADD</button>
+            <a href="/home" class="btns blk">CANCEL</a>
+        </form>
+
+        </div>
+       
+
+
+
+        <style>
+
+.right {
+    height:100%;
+    bottom:0px;
+    left:20px;
+    width:19%;
+    background-color:#000000;
+   position:absolute;
+  left:81%;
+    
+}
+.btns
+{
+    background-color:#237DB6;
+    border-radius:30px;
+    border-color:transparent;
+    color:white;
+    padding:4px 35px;
+    margin-top:14px;
+    margin-left:40px;
+
+}
+.blk
+{
+    background-color:black;
+    text-decoration:none;
+    margin-left:14px;
+}
+.blk:hover
+{
+color:white;
+}
+.containerOuter
+{ 
+    background-color:rgba(0, 0, 0, 0.5);
+   backdrop-filter: blur(0px);
+   border-radius:0 0 7px 7px;
+   margin-left:0px;
+    width:78%;
+    position:relative;
+    display:flex;
+    border-radius:0px 16px 0px 0px;
+    height:94vh;
+    margin-top:0px;
+    
+  
+}
+.addBtn
+{
+    position:absolute;
+    left:9%;
+    top:260px;
+   
+    background-color:transparent;
+    color:white;
+   border:none;
+}
+.logoutBtn
+{
+    position:absolute;
+    left:100%;
+    top:4px;
+    transform:translateX(-100%);
+    background-color:transparent;
+    color:white;
+   border:none;
+}
+body
+{
+background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
+ background-position:center;
+ background-size:cover;
+
+}
+form
+{
+    color:white;
+}
+.border-curve
+{
+    margin-top:7px;
+  border-radius:6px 6px 0px 0px;
+  border-color:transparent;
+}
+.labelLine
+{
+   
+    margin-left:150px;
+}
+.inputLine
+{   width:180px;
+    margin-left:45px;
+    height:35px;
+}
+label
+{   margin-left:50px;
+    margin-top:16px;
+    
+}
+input
+{
+    margin-left:40px;
+}
+
+        </style>
+
+
+
+
+        <!-- <form action="/updateitem/< %=item._id%>?_method=PUT" method="POST">
+            <label for="itemname">Name</label><br>
+            <input type="text" id="itemname" name="itemname" placeholder="Enter Item Name" value="< %=item.itemname%>"><br>
+            <label for="manufacturerName">Manufacturer</label><br>
+            <input type="text" id="manufacturerName" name="manufacturerName" placeholder="Enter Manufacturer Name" value="< %=item.manufacturerName%>"><br>
             <label for="category">Category</label>
-            <select name="category" value="<%=item.category%>" id="category">
+            <select name="category" value="< %=item.category%>" id="category">
                 <option value="Men">Men</option>
                 <option value="Women">Women</option>
             </select>
             <label for="rating">Rating</label>
-            <select name="rating" id="rating" value="<%=item.rating%>">
+            <select name="rating" id="rating" value="< %=item.rating%>">
                 <option value="5.0">5.0</option>
                 <option value="4.0">4.0</option>
                 <option value="3.0">3.0</option>
@@ -24,16 +187,16 @@
                 <option value="1.0">1.0</option>
             </select>
             <label for="price">Price</label>
-            <input type="text" id="price" name="price" placeholder="10" value="<%=item.price%>">
+            <input type="text" id="price" name="price" placeholder="10" value="< %=item.price%>">
             <br>
             <label for="url">Image URL</label><br>
-            <input type="text" id="url" name="url" placeholder="Enter Image URL" value="<%=item.url%>"><br>
+            <input type="text" id="url" name="url" placeholder="Enter Image URL" value="< %=item.url%>"><br>
             <label for="about">About</label><br>
-            <textarea id="about" name="about" rows="4" cols="50" placeholder="About Item" ><%=item.about%></textarea><br>
+            <textarea id="about" name="about" rows="4" cols="50" placeholder="About Item" >< %=item.about%></textarea><br>
             <button type='submit'>UPDATE</button>
             <a href="/home" class="btn">CANCEL</a>
         </form>
 
 
         
-        <form action="/logout" method="GET"><button class='btn btn-danger'>Logout</button></form>
+        <form action="/logout" method="GET"><button class='btn btn-danger'>Logout</button></form> -->

@@ -2,12 +2,18 @@
 <!-- <link rel="stylesheet" href="/css/buy.css"> -->
 <section class="right">
     <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
-    <div class="circleBox" style="margin:29px;"> 
-        <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
-        <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
-    </div>
-    <form action="/home" method="GET"><button style="color:#237DB6;top:210px;" class="addBtn ">HOME</button></form> 
-    <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form> 
+            <div class="circleBox" style="margin:29px;"> 
+                <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
+                <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
+            </div>
+            <form action="/home" method="GET"><button style="color:#237DB6;top:210px;" class="addBtn util-up">HOME</button></form> 
+            <% if (user.username=='admin'){ %>  
+            <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form>
+            <%}else{%>
+                <form action="/myBag" method="GET">
+                    <button class="addBtn">MY BAG</button>
+                </form> 
+                <%}%>
 </section>
 <h6 style="display:inline;color:white; margin-left:15px; ">Hello,</h6><h3 style="display:inline;color:white ; " ><%=user.username%> </h3>
 
@@ -31,7 +37,7 @@
                     <h6 class="mname">By <%=itemIterator.manufacturerName%> </h6>
                     <h6 class="rating"> Rating:<%=itemIterator.rating%></h6>
                     </div>
-                    <button class="button" type='submit' style="width:100%; height:100%; position:absolute;border:none; background-color: transparent;"></button>
+                    <button class="bigButton" type='submit' ></button>
                 </div>
             </form> 
             <% if (!(user.username==='admin')){ %>  
@@ -46,7 +52,7 @@
              
  
        
-             <!-- <div class="gap"></div> -->
+             <div class="gap"></div>
 
              <div class="break" style="display:block;width:100%;";></div>
              <h4 class='menHeading' style="color:white;height:0;width:0;display:block;margin:2px;">WOMEN</h4>
@@ -65,7 +71,7 @@
                                 <h6 class="mname">By <%=itemIterator.manufacturerName%> </h6>
                                 <h6 class="rating"> Rating:<%=itemIterator.rating%></h6>
                                 </div>
-                            <button class="button" type='submit' style="width:100%; height:100%; position:absolute;border:none; background-color: transparent;"></button>
+                            <button class="bigButton" type='submit'></button>
                         </div>
                     </form> 
                     <% if (!(user.username==='admin')){ %>  
@@ -81,26 +87,37 @@
                      <% } %>
 
 
-                    <% if (!(user.username==='admin')){ %>              
-                        <form action="/myBag" method="GET">
-                            <button>MY BAG</button>
-                        </form> 
-                        </div> 
-                        <% } %> 
-                <% if (user.username==='admin'){ %>  
-                  
-                 
-                   
-                    <% }%>
+   
+
+
+
+              
+            
              
-                <script src="/js/buy.js"></script>
+             
  
                 
 
 
 
 <style>
-
+    .bigButton
+    {
+        width:100%;
+         height:100%; 
+        position:absolute;
+        /* background-color:white; */
+        border:none;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        right:0%;
+         background-color: transparent;
+    }
+.hide
+{
+    display:none;
+}
 .box-bottom
 {
 color:white;
@@ -236,7 +253,7 @@ background-image:url('https://raw.githubusercontent.com/john-fermadez/project/ma
     left:20px;
     width:19%;
     background-color:#000000;
-   position:absolute;
+   position:fixed;
   left:81%;
     
 }
