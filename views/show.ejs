@@ -7,25 +7,43 @@
                 <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
             </div>
             <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
-            <form action="/additem" method="GET"><button style="" class="addBtn">ADD ITEM</button></form> 
+            <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form> 
         </section>
 
 
  <div class='containerOuter'>
-    <div class="img" style="background-image:url('<%=itemIterator.url%>');"> </div>
-<h1><%=item.itemname%> </h1>
-<h2>By <%=item.manufacturerName%> </h2>
-<h3>Rating:<%=item.rating%></h3>
 
+
+<div class="arrow-box">
+    <form method="GET" action="/home"><button class="backBtn" ></button>  </form> 
+<div class="arrow"></div>
+</div>
+<h6 class="arrow-text" >ITEM DETAILS </h6>
+
+
+    <div class="img" style="background-image:url('<%=itemIterator.url%>');"> </div>
+<h6 class="name"><%=item.itemname%> </h6>
+<h6 class="mname">By <%=item.manufacturerName%> </h6>
+
+
+
+<div class="star-box">
+<div class="star     <%=item.rating >= 1? `lightUp`:''%>     "></div>
+<div class="star      <%=item.rating >= 2? `lightUp`:''%>    "></div>
+<div class="star      <%=item.rating >= 3? `lightUp`:''%>    "></div>
+<div class="star      <%=item.rating >= 4? `lightUp`:''%>    "></div>
+<div class="star      <%=item.rating >= 5? `lightUp`:''%>    "></div>
+</div>
    
 
-<h2>Price: <%=item.price%> </h2>
-<p>About: <%=item.about%> </p>
+<h2 class="priceTag">$<%=item.price%> </h2>
+<div class="about" ><h5 style="color:white;">ABOUT ITEMS  </h5><span style="color:white;"><%=item.about%></span></div>
 
 
-<% if (user.equals('610140e79a43791f389b72e2')){ %>  
+<% if (user.username=='admin'){ %>  
 <div><form action="/updateitem/<%=item._id%>" method="GET"><button>Edit item</button></form> </div>
-<form method="POST" action="/deleteitem/<%=item._id%>?_method=DELETE" ><button class="delete">Delete item</button></form> 
+<form method="POST" action="/deleteitem/<%=item._id%>?_method=DELETE" ><button class="delete" >delete item</button></form> 
+<a><i class="fas fa-trash"></i></a>
 <% }else{%>
     
     <form action="/buy" method="POST">
@@ -37,27 +55,136 @@
     </form> 
     </div> 
 <% } %>  
+
 </div>
 
 
 
 
-
 <style>
+ 
+    .arrow-box{
+         position:relative;
+        background-color:white;
+         width:35px;
+         height:35px;
+         display:flex;
+         flex-direction:row;
+         justify-content:center;
+         align-items:center;
+         border-radius:100%;
+         left: 6%;top: 6%;
+         
+    }
+    .backBtn
+    {
+        width: 100%;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        right:0%;
+        z-index:4;
+        border:none;
+        height:100%;
+        position:absolute;
+        background-color:transparent;
+        border-radius:100%;
+    }
+    .arrow
+    {
+   background-image:url("https://image.flaticon.com/icons/png/512/507/507257.png");
+   background-size:cover;
+      position:absolute;
+   width:25px;
+   height:25px;
+  
+    }
+    .arrow-text
+    {
+        font-size:18px;
+      color:white;
+       font-weight:500;
+        position:absolute;
+        left: 11%;top: 7%;
+    }
+    .img
+{
+    width:155px;
+    height: 180px;
+    position:relative;
+    top:15%; left:6%;
+    border-radius:0px 10px 0px 0px;
+    background-size:cover;
+}
+.name
+{
+font-size:20px;
+color:white;
+font-weight:600;
+position:absolute;
+top:20%; left:25%;
+}
+.mname
+{
+    font-size:18px;
+color:white;
+font-weight:500;
+top:26%; left:25%;
+position:absolute;
+}
+.star-box
+{
+    position:absolute;
+   background-color:transparent;
+   width:200px;
+   height:35px;
+   top:30%; left:24%;
+   display:flex;
+   flex-direction:row;
+   justify-content:space-around;
+   align-items:center;
+}
+.star
+{
+background-color:white;
+height:17px;
+width:17px;
+border-radius:100%;
+}
+.lightUp
+{
+    background-color:#EF7D21;
+}
+.priceTag
+{
+    width:67px;
+    height:30px;
+    background-color:black;
+    text-align:center;
+    top:38%; left:25%;
+    font-size:25px;
+    border-radius:0px 8px 0px 0px;
+    position:absolute;
+    color:#BED331;
+  
+}
+
+.about
+{
+font-size:13px;
+color:white;
+font-weight:300;
+position:absolute;
+top:60%; left:6%;
+}
 
 .delete
 {
     position:absolute;
+  
+  
 }
-.img
-{
-    width:155px;
-    height: 180px;
-    position:absolute;
-    left:80%;
-    border-radius:0px 10px 0px 0px;
-    background-size:cover;
-}
+
     .right {
         height:100%;
         bottom:0px;

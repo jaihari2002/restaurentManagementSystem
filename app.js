@@ -32,8 +32,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json())
 app.use(methodOverride('_method'));
 
-//const userRoutes=require('./routes/user')
-// const productRoutes=require('./routes/item')
+
 const sessionConfig = {
     secret: 'secret',
     resave: false,
@@ -220,6 +219,7 @@ app.delete('/deleteBag/:id',isLoggedin,isUser,async(req,res)=>{
 //      res.render('home.ejs',{user});
 //  });
 
-app.listen(5000,() => {
-    console.log('Serving on port 5000')
+app.listen(3000,() => {
+    console.log('Listening to port 3000!!!!!')
 })
+
