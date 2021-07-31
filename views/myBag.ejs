@@ -1,23 +1,48 @@
+
+
+
 <%layout('boilerplate')%>
-<h1>MY BAG</h1>
+<div class="overlay hidden"></div>
+<h1 style="color:white;font-size:25px;font-weight:400;margin-left:20px;">MY BAG</h1>
 <% var price=0%>
-<% for(i of bagItem){%> 
-    <div class>
+
+
+<section class="right">
+    <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
+            <div class="circleBox" style="margin:29px;"> 
+                <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
+                <h6 style="color:white;margin-top:15px;margin-left:7px;"><%=user.username%> </h6>
+            </div>
+            <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
+                <form action="/myBag" method="GET">
+                    <button style="color:#237DB6;" class="addBtn">MY BAG</button>
+                </form> 
+              
+</section>
+
+
+
+<% for(i of bagItem){%>
+    <div class='containerOuter'>
+    <div class='row'>
         <form action="/details/<%=i._id%>" method="GET">
-            <button>
-                <img src="<%=i.url%>" alt=""> 
-                <p><%=i.itemname%> </p> 
-                <p><%=i.manufacturerName%> 
-                <span> Rating <%=i.rating%></span>
-                </p>
-                <p><%=i.price%> </p>
-            </button>
+          
+        <div class="img"  style='background-image:url("<%=i.url%>")'> </div>
+        <h6 class="name"><%=i.itemname%> </h6> 
+        <h6 class="mname">By <%=i.manufacturerName%> </h6>
+         
+            <div class=priceTag>$<%=i.price%></div>
+           
         </form> 
-        <form method="POST" action="/deleteBag/<%=i._id%>?_method=DELETE" >
-            <button name="id" value=<%=i._id%>>DELETE</button>
-        </form>
+        <div class="delete-box">
+            <button class="deleteBtn show"></button>
+         <div class="delete"></div>
+         </div>
+
         <%price=price+i.price%>
     </div>
+
+</div>
 <% }%> 
 <div>
 <%if(price!==0) {%>
@@ -25,5 +50,263 @@
 <p>Your Total Price $<%=price%></p>
 <%}%>
 </div>
-<a href="/home" >Home</a>
-<form action="/logout" method="GET"><button >Logout</button></form>
+<div class="popup hidden ">
+    <h4 class="popup-h1 primary">CONFIRM REMOVE<h6 class="popup-h1 secondary">Do you really wish to remove this item from your bag?</h6></h4>
+    <button class="close-modal btns blk" style="background-color:black;">CANCEL</button>
+    <form method="POST" action="/deleteBag/<%=i._id%>?_method=DELETE" ><button class="deleteInPop" name="id" value=<%=i._id%>>REMOVE</button></form>
+</div>
+
+        
+
+
+
+        <script>
+
+            const popup=document.querySelector('.popup');
+            const overlay=document.querySelector('.overlay');
+            const show=document.querySelector('.show');
+            const closeModal=document.querySelector('.close-modal');
+            show.addEventListener('click',function()
+                  {console.log('popup open Button Clicked');
+                    popup.classList.remove('hidden');
+                    overlay.classList.remove('hidden');
+                  });
+            closeModal.addEventListener('click',function()
+                  {console.log('cancel Button Clicked');
+                    popup.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                  });
+            
+            
+            
+            </script>
+<style>
+    .hidden
+{
+    display:none;
+}
+
+
+
+.overlay
+{position:fixed;
+    
+     width:100%;
+     z-index:1;
+    height:100%;
+    background-color:rgba(0,0,0,0.6);
+    backdrop-filter:blur(3px);
+}
+.popup
+{
+    background-color: white;
+   position:absolute;
+top:40%;
+left:45%;
+transform:translateX(-50%);
+    width: 500px;
+    height:210px;
+   
+   z-index:2;
+   
+    /* top:140px; */
+    border-radius:0px 17px 0px 0px;
+}
+.primary
+{
+ margin-left:20px;
+ margin-top:20px;
+}
+.secondary
+{
+    color:#707070;
+    margin-top:5%;
+    margin-left:20px;
+}
+.deleteInPop
+{
+    background-color:#237DB6;
+    border-radius:30px;
+    border-color:transparent;
+    color:white;
+    padding:4px 35px;
+   position:absolute;
+top:75%;left:10%;
+}
+.blk
+{  height:38px;
+    width:150px;
+    background-color:black;
+    text-decoration:none;
+    position:absolute;
+    top:75%;left:40%;
+}
+.blk:hover
+{
+color:white;
+}
+     .delete-box
+    {
+        position:absolute;
+        left:1%;
+        top:10%;
+       background-color:white;
+         width: 25px;
+         height:25px;
+         display:flex;
+         flex-direction:row;
+         justify-content:center;
+         align-items:center;
+         border-radius:100%;
+         
+    }
+    .deleteBtn
+    {
+        width: 100%;
+        top:0%;
+        bottom:0%;
+        left:0%;
+        right:0%;
+        z-index:4;
+        border:none;
+        height:100%;
+        position:absolute;
+        border-radius:100%;
+        background-color:transparent;
+        
+    }
+    .delete
+    {
+        background-image:url("https://image.flaticon.com/icons/png/512/3388/3388913.png");
+   background-size:cover;
+      position:absolute;
+   width:100%;
+   height:100%;
+    }
+    .img
+{
+    width:155px;
+    height: 180px;
+   
+    margin-left:60px;
+    margin-top:10px;
+    border-radius:0px 10px 0px 0px;
+    background-size:cover;
+}
+.priceTag
+{
+    
+    height:20px;
+    background-color:black;
+    text-align:center;
+    width:8%;
+    height:38px;
+    font-size:25px;
+    border-radius:0px 8px 0px 0px;
+    position:absolute;
+    color:#BED331;
+    top:7%;
+    left:80%;
+}
+.name
+{
+font-size:25px;
+font-weight:600;
+position:absolute;
+color:white;
+top: 7%;left:25%;
+}
+.mname
+{color:white;
+    font-size:15px;
+    font-weight:200;
+    position:absolute;
+    top:25%;left:25%;
+}
+.containerOuter
+{ 
+   background-color:rgba(0, 0, 0, 0.3);
+  
+   backdrop-filter: blur(0px);
+   margin-left:20px;
+    width:78%;
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+.addBtn
+{
+    position:absolute;
+    left:9%;
+    top:260px;
+   
+    background-color:transparent;
+    color:white;
+   border:none;
+}
+body
+{
+background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
+ background-position:center;
+ background-size:cover;
+
+}
+.btn
+{
+    background-color:#237DB6;
+    border-radius:30px;
+    border-color:transparent;
+    position:absolute;
+    padding:7px 30px;
+    top:100%;
+     left:4%;
+    transform:translateY(-150%);
+    color:white;
+}
+.btns
+{
+    background-color:#237DB6;
+    border-radius:30px;
+    border-color:transparent;
+    color:white;
+    padding:7px 30px;
+}
+  .btn:hover
+{
+ cursor:pointer;
+}
+.logoutBtn
+{
+    position:absolute;
+    left:100%;
+    top:4px;
+    transform:translateX(-100%);
+    background-color:transparent;
+    color:white;
+   border:none;
+}
+
+
+.right {
+    height:100%;
+    bottom:0px;
+    left:20px;
+    width:18%;
+    background-color:#000000;
+   position:fixed;
+  left:80%;
+    
+}
+.row{
+   
+   width:100%;
+   margin-bottom:30px;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  /* background-color:hotpink; */
+
+  justify-content:space-around;
+}
+</style>

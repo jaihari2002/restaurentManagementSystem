@@ -4,7 +4,7 @@
     <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
             <div class="circleBox" style="margin:29px;"> 
                 <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
-                <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
+                <h6 style="color:white;margin-top:15px;margin-left:7px;"><%=user.username%> </h6>
             </div>
             <form action="/home" method="GET"><button style="color:#237DB6;top:210px;" class="addBtn util-up">HOME</button></form> 
             <% if (user.username=='admin'){ %>  
@@ -33,7 +33,21 @@
                     <div class="img" style="background-image:url('<%=itemIterator.url%>');"> </div>
                     <div class="box-bottom">
                     <div class=priceTag>$<%=itemIterator.price%></div>
+                    <%let len=`${itemIterator.itemname}`.length,final='',str=`${itemIterator.itemname}`;%>
+                    <% if(len>20){%>
+                     <%for(let i=0;i<len;i++){%>
+                      <%final=final+str[i];%>
+                      <%if(i==20){%>
+                      <%final=final+`........`;%>
+                      <%break;%>
+                      <%}%>
+
+                     <%}%>
+                     <h6 class="name"><%=`${final}`%> </h6> 
+                    
+                    <%} else{%>
                     <h6 class="name"><%=itemIterator.itemname%> </h6> 
+                    <%}%>
                     <h6 class="mname">By <%=itemIterator.manufacturerName%> </h6>
                     <h6 class="rating"> Rating:<%=itemIterator.rating%></h6>
                     </div>
@@ -132,7 +146,7 @@ height: 40%;
 }
 .priceTag
 {
-    width:10px;
+    
     height:20px;
     background-color:black;
     text-align:center;
@@ -223,17 +237,7 @@ top: 50%;left:6%;
     width:260px;
 }
 
-.addAnchor{
-width: 100px;
-border:1px solid black;
-padding:4px;
-color:black;
-text-decoration:none;
-text-align:center;
-padding:7px;
- position:absolute;
 
-}
 .addAnchor:hover
 {
  cursor:pointer;

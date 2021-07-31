@@ -6,7 +6,7 @@
             <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
             <div class="circleBox" style="margin:29px;"> 
                 <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
-                <h6 style="color:white;margin-top:15px;"><%=user.username%> </h6>
+                <h6 style="color:white;margin-top:15px;margin-left:7px;"><%=user.username%> </h6>
             </div>
             <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
             <% if (user.username=='admin'){ %>  
@@ -98,17 +98,6 @@ closeModal.addEventListener('click',function()
         popup.classList.add('hidden');
         overlay.classList.add('hidden');
       });
-// const closeModelCommonVariable=function()
-// {
-//     popup.classList.add('hidden');
-//     overlay.classList.add('hidden');
-// };
-// closeModal.addEventListener('click',closeModelCommonVariable);
-// overlay.addEventListener('click',closeModelCommonVariable);
-
-
-
-
 
 
 
@@ -120,18 +109,7 @@ closeModal.addEventListener('click',function()
     display:none;
 }
 
-/* .close-modal
-{
- color:#333;
- cursor:pointer;
- border:none;
- background:none;
- font-size:40px;
- font-weight: 100;
-position:absolute;
-left:90%;
-bottom:88%;
-} */
+
 
 .overlay
 {position:fixed;

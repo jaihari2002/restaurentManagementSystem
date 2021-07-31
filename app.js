@@ -137,12 +137,16 @@ app.get('/details/:id',isLoggedin, async(req, res) => {
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    get request from home.ejs and we render to add.ejs
 app.get('/additem',isLoggedin,isAdmin, (req, res) => {
     const user=req.user;
+   
     res.render('add.ejs',{user});
 })
 //%%%%%%%%%%%%%%%%%%%%%         post request from add.ejs that brings all detail of product ex:category,name,manu...etc
 app.post('/additem',isLoggedin,isAdmin, async (req, res) => {
     const item = new Item(req.body);
+  
     item.user=req.user._id;
+    const itemId=req.body.itemid;
+    await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : itemId}});
     await item.save();
     res.redirect('/home');
 })
@@ -155,8 +159,9 @@ app.post('/additem',isLoggedin,isAdmin, async (req, res) => {
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  get request from show.ejs where we can take the selected product id from params
 app.get('/updateitem/:id',isLoggedin,isAdmin,async(req,res)=>{
     const {id}=req.params;
+     const user=req.user;
     const item=await Item.findById(id);// storing the product object
-    res.render('update.ejs',{item});//sending the items object to update.ejs so that we can enter the update details and send as PUT/POST REQUEST
+    res.render('update.ejs',{item,user});//sending the items object to update.ejs so that we can enter the update details and send as PUT/POST REQUEST
 })
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% geting a PUT POST REQUEST from show.ejs to update in home.ejs
 app.put('/updateitem/:id',isLoggedin,isAdmin,async(req,res)=>{
@@ -178,8 +183,10 @@ app.delete('/deleteitem/:id',isLoggedin,isAdmin,async(req,res)=>{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   geting a POST REQUEST from home.ejs and iam adding that product to current user array
 app.post('/buy',isLoggedin,isUser, async(req, res) => {
     const itemId=req.body.itemid;
+    const user=req.user;
     await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : itemId}});
-    res.redirect('/myBag');
+    console.log(itemId)
+    res.redirect('/myBag',{user});
 })
 
 
@@ -190,6 +197,7 @@ app.post('/buy',isLoggedin,isUser, async(req, res) => {
 
 app.get('/myBag',isLoggedin,isUser, async(req, res) => {
     let bagItem=[],s=0;
+    const user=req.user;
     const currentUser=await User.findById(req.user);
      try{
     for(let i of currentUser.userarr)
@@ -199,7 +207,7 @@ app.get('/myBag',isLoggedin,isUser, async(req, res) => {
  }catch(e){
      res.send("nothing added to My bag");
  }
-    res.render('myBag',{bagItem});
+    res.render('myBag',{bagItem,user});
 })
 
 app.delete('/deleteBag/:id',isLoggedin,isUser,async(req,res)=>{
