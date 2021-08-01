@@ -1,3 +1,5 @@
+
+
 <%layout('boilerplate')%>
 <title>HOME</title>
 <section class="right">
@@ -11,17 +13,31 @@
             <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form>
             <%}else{%>
                 <form action="/myBag" method="GET">
-                    <button class="addBtn">MY BAG</button>
+                    <button class="addBtn"><var>MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
 </section>
 <h6 style="display:inline;color:white; margin-left:15px; ">Hello,</h6><h3 style="display:inline;color:white ; " ><%=user.username%> </h3>
 
 
+<div class='emptyContainerOuter <%= cartCount ==  0?``:"hide" %>'>
+    <div class="gap ">
+       
+        <div class="emptyLogo" style="background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/bag-empty.png?raw=true');" ></div>
+        
+        <h2 class="emptyMsg1"> YOUR STORE IS EMPTY<h6 class="emptyMsg2">Add Items to it now</h6></h2>
+        <form action="/home" method="GET"><button class="btns emptyBtn">ADD ITEM</button></form>
+    </div>
+</div>
+
+
+
+
     <div class='containerOuter'>
         <h4 class='menHeading' style="color:white;height:0;width:0;display:block;margin:2px;">MEN</h4>
         <br><br>
 
+                                                        <!-- MEN -->
     <% for(itemIterator of item){%> 
         <% if(itemIterator.category==='Men') {%> 
        <div class="menContainer container">    
@@ -35,10 +51,10 @@
                     <div class=priceTag>$<%=itemIterator.price%></div>
                     <!-- FOR PRODUCTNAME -->
                     <%let len=`${itemIterator.itemname}`.length,final='',str=`${itemIterator.itemname}`;%>
-                    <% if(len>18){%>
+                    <% if(len>15){%>
                      <%for(let i=0;i<len;i++){%>
-                      <%final=final+str[i];%>
-                      <%if(i==18){%>
+                      <%final=final+str[i]; %>
+                      <%if(i==15){%>
                       <%final=final+`........`;%>
                       <%break;%>
                       <%}%>
@@ -84,7 +100,7 @@
  
        
             
-
+                                                       <!-- WOMEN -->
              <div class="break" style="display:block;width:100%;";></div>
              <h4 class='menHeading' style="color:white;height:0;width:0;display:block;margin:2px;">WOMEN</h4>
              <% for(itemIterator of item){%> 
@@ -100,10 +116,10 @@
                                 <div class=priceTag>$<%=itemIterator.price%></div>
                 <!-- FOR PRODUCTNAME -->
                 <%let len=`${itemIterator.itemname}`.length,final='',str=`${itemIterator.itemname}`;%>
-                    <% if(len>18){%>
+                    <% if(len>15){%>
                      <%for(let i=0;i<len;i++){%>
                       <%final=final+str[i];%>
-                      <%if(i==18){%>
+                      <%if(i==15){%>
                       <%final=final+`........`;%>
                       <%break;%>
                       <%}%>
@@ -162,6 +178,67 @@
 
 
 <style>
+    
+
+ .emptyContainerOuter
+    {
+        background-color:rgba(0, 0, 0, 0.5);
+  
+  backdrop-filter: blur(0px);
+  border-radius:0px 16px 0px 0px;;
+  margin-left:0px;
+   width:78%;
+   position:relative;
+   display:flex;
+   flex-direction:row;
+   flex-wrap:wrap;
+    }
+    .emptyLogo
+    {
+        background-image:url("https://raw.githubusercontent.com/john-fermadez/step-images/main/assets/Icons/bag-empty.png");
+        width:25%;
+        height:25%;
+        background-size:cover;
+        position:absolute;
+        top:20%;left:12%;
+    }
+    .emptyMsg1
+    {
+        position:absolute;
+        top: 50%;left:10%;
+        font-weight:300;
+    }
+    .emptyMsg2
+    {
+        position:absolute;
+        top:60%;left:17%;
+    }
+    .emptyBtn
+    {
+        position:absolute;
+        top:70%;left:17%;
+    }
+    .gap
+    {
+        display:relative;;
+        width:100%;
+        height:93vh;
+        /* background-color:blue; */
+        color:white;
+    }
+    .supersript
+    {
+        background-color:#EF7D21;
+        border-radius:100%;
+        width:15px;
+        height:15px;
+        position:absolute;
+        display:flex;
+        flex-direction:row;
+        justify-content:center;
+        align-items:center;
+        left:100%;
+    }
     .bigButton
     {
         width:100%;

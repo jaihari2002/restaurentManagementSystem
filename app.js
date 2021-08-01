@@ -122,7 +122,15 @@ app.use(methodOverride('_method'));
 app.get('/home',isLoggedin, async(req, res) => {
     const item=await Item.find({});
     const user=req.user;
-    res.render('home.ejs',{item,user});
+    
+    const currentUser=await User.findById(req.user);
+
+
+    const admin=await User.findOne({username:'admin'},{})
+   let cartCount=admin.userarr.length;
+  console.log(`cartCount:${cartCount}`)
+    res.render('home.ejs',{item,user,cartCount});
+  
 })
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%               get request from home.ejs that brings product id as params 
 app.get('/details/:id',isLoggedin, async(req, res) => {
@@ -146,7 +154,11 @@ app.post('/additem',isLoggedin,isAdmin, async (req, res) => {
   
     item.user=req.user._id;
     const itemId=req.body.itemid;
-    await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : itemId}});
+    console.log(`itemId:${itemId}`)
+    console.log(`reqbody:${req.body}`)
+    const addedItemId=item._id;
+    console.log(`added item id:${addedItemId}`);
+    await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : addedItemId}});
     await item.save();
     res.redirect('/home');
 })
@@ -174,7 +186,9 @@ app.put('/updateitem/:id',isLoggedin,isAdmin,async(req,res)=>{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    delete request from show.ejs where we can take the selected product id from params                      
 app.delete('/deleteitem/:id',isLoggedin,isAdmin,async(req,res)=>{
     const {id}=req.params;
+    await User.updateOne({username: `${req.user.username}`}, {$pull: { userarr: id }});
     const item=await Item.findByIdAndDelete(id);
+    
     res.redirect('/home');
 })
 
@@ -183,10 +197,21 @@ app.delete('/deleteitem/:id',isLoggedin,isAdmin,async(req,res)=>{
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   geting a POST REQUEST from home.ejs and iam adding that product to current user array
 app.post('/buy',isLoggedin,isUser, async(req, res) => {
     const itemId=req.body.itemid;
-    const user=req.user;
+   
     await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : itemId}});
     console.log(itemId)
-    res.redirect('/myBag',{user});
+   
+    let bagItem=[],s=0,bagCount=0;
+    const currentUser=await User.findById(req.user);
+    for(let i of currentUser.userarr)
+    {
+        bagItem[s++]=await Item.findById(i);
+        bagCount++;
+    }
+    const user=req.user;
+
+    res.render('myBag.ejs',{bagItem,user, bagCount});
+   
 })
 
 
@@ -196,25 +221,29 @@ app.post('/buy',isLoggedin,isUser, async(req, res) => {
 
 
 app.get('/myBag',isLoggedin,isUser, async(req, res) => {
-    let bagItem=[],s=0;
+    let bagItem=[],s=0, bagCount=0;
     const user=req.user;
     const currentUser=await User.findById(req.user);
      try{
     for(let i of currentUser.userarr)
     {
         bagItem[s++]=await Item.findById(i);
+        bagCount++;
     }
  }catch(e){
      res.send("nothing added to My bag");
  }
-    res.render('myBag',{bagItem,user});
+    res.render('myBag.ejs',{bagItem,user, bagCount});
 })
 
 app.delete('/deleteBag/:id',isLoggedin,isUser,async(req,res)=>{
     const {id}=req.params;
     await User.updateOne({username: `${req.user.username}`}, {$pull: { userarr: id }});
+    const currentUser=await User.findById(req.user);
+  
+
     res.redirect('/myBag');
-})
+});
 
 
 
@@ -230,4 +259,3 @@ app.delete('/deleteBag/:id',isLoggedin,isUser,async(req,res)=>{
 app.listen(3000,() => {
     console.log('Listening to port 3000!!!!!')
 })
-

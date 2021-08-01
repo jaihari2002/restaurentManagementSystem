@@ -14,7 +14,7 @@
             <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form>
             <%}else{%>
                 <form action="/myBag" method="GET">
-                    <button class="addBtn">MY BAG</button>
+                    <button class="addBtn"><var>MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
         </section>
@@ -104,7 +104,19 @@ closeModal.addEventListener('click',function()
 
 </script>
 <style>
- 
+     .supersript
+    {
+        background-color:#EF7D21;
+        border-radius:100%;
+        width:15px;
+        height:15px;
+        position:absolute;
+        display:flex;
+        flex-direction:row;
+        justify-content:center;
+        align-items:center;
+        left:100%;
+    }
 .hidden
 {
     display:none;

@@ -16,10 +16,27 @@
             </div>
             <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
                 <form action="/myBag" method="GET">
-                    <button style="color:#237DB6;" class="addBtn">MY BAG</button>
+                    <button class="addBtn" style="color:#237DB6;"><var>MY BAG<sup class="supersript">    <%= bagCount%></sup></var></button>
                 </form> 
               
 </section>
+
+
+<div class='emptyContainerOuter <%= bagCount ==  0?``:'hidden' %>'>
+    <div class="gap " >
+       
+        <div class="emptyLogo " style="background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/bag-empty.png?raw=true');" ></div>
+        
+        <h2 class="emptyMsg1 "> YOUR CART IS EMPTY<h6 class="emptyMsg2 ">Add Items to it now</h6></h2>
+        <form action="/home" class="" method="GET"><button class="btns emptyBtn ">Shop Now</button></form>
+    </div>
+
+
+
+</div>
+
+
+
 
 
 
@@ -36,7 +53,7 @@
            
         </form> 
         <div class="delete-box">
-            <button class="deleteBtn show"></button>
+            <button class="deleteBtn show" id="<%=i._id%>" onclick="getId(this)" name="<%=i.itemname%>" value="<%=i._id%>"></button>
          <div class="delete"></div>
          </div>
 
@@ -44,12 +61,16 @@
     </div>
 
 </div>
+
+
+<% }%> 
 <div class="popup hidden ">
     <h4 class="popup-h1 primary">CONFIRM REMOVE<h6 class="popup-h1 secondary">Do you really wish to remove this item from your bag?</h6></h4>
     <button class="close-modal btns blk" style="background-color:black;">CANCEL</button>
-    <form method="POST" action="/deleteBag/<%=i._id%>?_method=DELETE" ><button class="deleteInPop" name="id" value=<%=i._id%>>REMOVE</button></form>
+    <form method="POST" action="/deleteBag/<%=i._id%>?_method=DELETE" ><button class="deleteInPop showIn"  value="changeDynamically">REMOVE</button></form>
 </div>
-<% }%> 
+
+
 <div>
 <%if(price!==0) {%>
 <p>Thank You For Shopping With Us!<p>
@@ -64,17 +85,53 @@
 
         <script>
 
+
+       
             const popup=document.querySelector('.popup');
             const overlay=document.querySelector('.overlay');
-            const show=document.querySelector('.show');
+            const show=document.querySelectorAll('.show');
+            const showIn=document.querySelectorAll('.showIn');
             const closeModal=document.querySelector('.close-modal');
-            show.addEventListener('click',function()
-                  {console.log('popup open Button Clicked');
-                    popup.classList.remove('hidden');
-                    overlay.classList.remove('hidden');
-                  });
+            function getId(show)
+            {
+               
+                let targetValue=show.value;
+                   popup.classList.remove('hidden');
+                   overlay.classList.remove('hidden');
+                   for(sI of showIn)
+                   {
+                    sI.addEventListener('click',function(){
+                       sI.value=targetValue;
+                       console.log(`${show.name}==${sI.name}`);
+                    });
+                   }
+
+            }
+
+// for(s of show)
+// {
+//     s.addEventListener('click',function()
+//                   {
+//                     // popup.classList.remove('hidden');
+//                     // overlay.classList.remove('hidden');
+//                     console.log(s.name);
+                    
+                   
+//                   });
+   
+// }
+            // for(s of show){
+            // s.addEventListener('click',function()
+            //       {
+            //         //   console.log('popup open Button Clicked');
+            //         popup.classList.remove('hidden');
+            //         overlay.classList.remove('hidden');
+            //         // console.log('clicked')
+            //       });
+            //       }
             closeModal.addEventListener('click',function()
-                  {console.log('cancel Button Clicked');
+                  {
+                    //   console.log('cancel Button Clicked');
                     popup.classList.add('hidden');
                     overlay.classList.add('hidden');
                   });
@@ -83,6 +140,69 @@
             
             </script>
 <style>
+    
+
+ .emptyContainerOuter
+    {
+        background-color:rgba(0, 0, 0, 0.5);
+  
+  backdrop-filter: blur(0px);
+  border-radius:0px 16px 0px 0px;;
+  margin-left:0px;
+   width:78%;
+   position:relative;
+   display:flex;
+   flex-direction:row;
+   flex-wrap:wrap;
+    }
+    .emptyLogo
+    {
+        background-image:url("https://raw.githubusercontent.com/john-fermadez/step-images/main/assets/Icons/bag-empty.png");
+        width:25%;
+        height:25%;
+        background-size:cover;
+        position:absolute;
+        top:20%;left:12%;
+    }
+    .emptyMsg1
+    {
+        position:absolute;
+        top: 50%;left:10%;
+        font-weight:300;
+    }
+    .emptyMsg2
+    {
+        position:absolute;
+        top:60%;left:17%;
+    }
+    .emptyBtn
+    {
+        position:absolute;
+        top:70%;left:17%;
+    }
+    .gap
+    {
+        display:relative;;
+        width:100%;
+        height:93vh;
+        /* background-color:blue; */
+        color:white;
+    }
+    .supersript
+    {
+        background-color:#EF7D21;
+        border-radius:100%;
+        width:15px;
+        height:15px;
+        position:absolute;
+        display:flex;
+        flex-direction:row;
+        justify-content:center;
+        align-items:center;
+        left:100%;
+        color:white;
+    }
+
     .hidden
 {
     display:none;
