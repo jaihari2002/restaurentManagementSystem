@@ -18,6 +18,8 @@
                     <button class="addBtn"><var style="font-style:normal;">MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
+
+                <div class="rightBottomImg"></div>
 </section>
 <h6 style="display:inline-block;color:white; margin-left:27px;margin-bottom:24px;margin-top:27px;">Hello,</h6><h3 style="display:inline-block;color:white ; " ><%=user.username%> </h3>
 
@@ -95,12 +97,24 @@
             <!-- < %= cartCount ==  0?``:"hide" %>'  -->
             
             <% if (!(user.username==='admin')){ %>  
-                <%const arr=user.userarr;%>
+
+
+             
+                <%const arr=user.userarr;let found='';%>
                 <%for(let i=0;i<arr.length;i++){ %>
-                    <%console.log(`arr[${i}]=${arr[i]}`)%>
+                    <%if(itemIterator._id==arr[i]){%> 
+                            <%found=true;%>
+                            <%break;%>
+                        <%} else{%>   
+                            <%found=false;%>
+                            <%}%>
                     <%  }%>
+
+
+
                 <form action="/buy" class='form' method="POST" >
-                    <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+                    <button style="z-index:<%= found ==  true? `0`:`2` %>"  name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+                        <div  onclick="getId(this)" class="btnsBefore "><div class="btnImg2"> </div>ADDED</div> 
                 </form>    
                     <% } %> 
         </div>       
@@ -165,8 +179,24 @@
                         </div>
                     </form> 
                     <% if (!(user.username==='admin')){ %>  
+
+
+
+                        <%const arr=user.userarr;let found='';%>
+                        <%for(let i=0;i<arr.length;i++){ %>
+                            <%if(itemIterator._id==arr[i]){%> 
+                                    <%found=true;%>
+                                    <%break;%>
+                                <%} else{%>   
+                                    <%found=false;%>
+                                    <%}%>
+                            <%  }%>
+
+
+
                         <form action="/buy" class='form' method="POST" >
-                            <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+                            <button style="z-index:<%= found ==  true? `0`:`2` %>"  name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+                            <div class="btnsBefore"><div class="btnImg2"> </div>ADDED</div> 
                         </form>    
                     
                     
@@ -183,22 +213,96 @@
 </body>        
              
              
- <!-- <script>
+ <script>
+    
     function getId(btns)
             {
-               
-                btns.classList.add('dum');
-                btns.style.backgroundColor="black";
-                btns.style.textContent="ADDED";
-                btns.style.disable=true;
+                btns.style.zIndex="0"; 
+
             }
 </script>
-                 -->
+                
 
 
 
 <style>
-   
+ 
+ .rightBottomImg
+ {
+   height:105px;
+   width:105px;
+   top:80%;
+   left:50%;
+   transform:translateX(-50%);
+   position:absolute;
+   background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Logo/mybagshop-white.png?raw=true');
+   background-size:contain;
+   background-repeat: no-repeat;
+ background-position:fit;
+ 
+
+ }
+   .btns
+{
+    background-color:#237DB6;
+    border-radius:30px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+   margin-right:22px;
+    border-color:transparent;
+    color:white;
+    height:30px;
+    width:110px;
+    font-size:13px;
+    z-index:2;
+}
+
+.btnImg
+    {
+        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/shopping-bag.png?raw=true');
+        /* background-color:white; */
+        width:15px;
+        height:15px;
+        transform:translateX(-200%);
+       display:absolute;
+        background-size:contain;
+      position:absolute;
+    }
+    .btnsBefore
+   {
+     height:30px;
+     width: 110px; 
+     z-index:1;
+     position:relative;
+     transform:translateY(-100%);
+     border-radius:30px;
+
+     display:flex;
+    justify-content:center;
+    align-items:center;
+   font-size:13px;
+  
+     background-color:black;
+     color:white;
+     
+   }
+
+   .btnImg2
+    {
+        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/tick.png?raw=true');
+        /* background-color:white; */
+        width:15px;
+        height:15px;
+        transform:translateX(-250%);
+       display:absolute;
+       
+        background-size:contain;
+        background-position:center;
+        background-repeat: no-repeat;
+      position:absolute;
+    }
    .adminBg
 {
 background-color:#000000;
@@ -207,11 +311,7 @@ background-color:#000000;
 {
 background-color:rgba(0,0,0,0.7);
 }
-    .disable
-    {
-    background-color:"black";
    
-    }
 
  .emptyContainerOuter
     {
@@ -351,31 +451,8 @@ top: 50%;left:6%;
     transform:translateY(-150%);
     color:white;
 }
-.btns
-{
-    background-color:#237DB6;
-    border-radius:30px;
-    position:relative;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-   margin-right:22px;
-    border-color:transparent;
-    color:white;
-    height:30px;
-    width:110px;
-}
-.btnImg
-    {
-        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/shopping-bag.png?raw=true');
-        /* background-color:white; */
-        width:15px;
-        height:15px;
-        transform:translateX(-200%);
-       display:absolute;
-        background-size:contain;
-      position:absolute;
-    }
+
+
   .btn:hover
 {
  cursor:pointer;
@@ -399,7 +476,7 @@ top: 50%;left:6%;
 { 
    background-color:rgba(0, 0, 0, 0.5);
   
-   backdrop-filter: blur(0px);
+   /* backdrop-filter: blur(0px); */
    border-radius:0px 16px 0px 0px;;
    margin-left:0px;
     width:78%;
@@ -420,6 +497,8 @@ body
 
  background-size:cover;
  background-position:fit;
+ background-attachment:fixed;
+
 }
 
 
@@ -428,7 +507,7 @@ body
     bottom:0px;
     left:20px;
     width:19%;
-    
+    backdrop-filter:blur(3px);
    position:fixed;
   left:81%;
     

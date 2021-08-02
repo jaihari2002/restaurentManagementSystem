@@ -2,7 +2,7 @@
 <title>SHOW</title>
 <div class="overlay hidden"></div>
 
-<h6 style="display:inline;color:white; margin-left:15px; ">Hello,</h6><h3 style="display:inline;color:white;"><%=user.username%> </h3>
+<h6 style="display:inline-block;color:white; margin-left:27px;margin-bottom:24px;margin-top:27px;">Hello,</h6><h3 style="display:inline-block;color:white ; " ><%=user.username%> </h3>
    <section class="right">
             <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
             <div class="circleBox" style="margin:29px;"> 
@@ -17,6 +17,7 @@
                     <button class="addBtn" ><var style="font-style:normal;">MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
+                <div class="rightBottomImg"></div>
         </section>
 
 
@@ -65,10 +66,25 @@
 
 
 <% }else{%>
-    
+    <%const arr=user.userarr;let found='';%>
+                        <%for(let i=0;i<arr.length;i++){ %>
+                            <%if(item._id==arr[i]){%> 
+                                    <%found=true;%>
+                                    <%break;%>
+                                <%} else{%>   
+                                    <%found=false;%>
+                                    <%}%>
+                            <%  }%>
+
+
+                            <form action="/buy" class='form' method="POST" >
+                                <button style="z-index:<%= found ==  true? `0`:`2` %>"  name="itemid" value="<%=item._id%>" class='btns' onclick="getId(this)" name="<%item.itemname%>"><div class="btnImg"> </div>BUY</button>
+                                <div class="btnsBefore"><div class="btnImg2"> </div>ADDED</div> 
+                            </form>    
+<!-- 
     <form action="/buy" class='form' method="POST" >
-        <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
-    </form>  
+        <button name="itemid" value="< %=itemIterator._id%>" class='btns' onclick="getId(this)" name="< %itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+    </form>   -->
 
       
    
@@ -104,7 +120,21 @@ closeModal.addEventListener('click',function()
 
 </script>
 <style>
+ .rightBottomImg
+ {
+   height:105px;
+   width:105px;
+   top:80%;
+   left:50%;
+   transform:translateX(-50%);
+   position:absolute;
+   background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Logo/mybagshop-white.png?raw=true');
+   background-size:contain;
+   background-repeat: no-repeat;
+ background-position:fit;
+ 
 
+ }
 .btns
 {
     background-color:#237DB6;
@@ -132,7 +162,40 @@ closeModal.addEventListener('click',function()
         background-size:contain;
       position:absolute;
     }
+    .btnsBefore
+   {
+     height:30px;
+     width: 110px; 
+     z-index:1;
+     position:absolute;
+     top:47.5%; left:24.05%;
+     border-radius:30px;
 
+     display:flex;
+    justify-content:center;
+    align-items:center;
+   font-size:13px;
+  
+     background-color:black;
+     color:white;
+     
+   }
+
+
+   .btnImg2
+    {
+        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/tick.png?raw=true');
+        /* background-color:white; */
+        width:15px;
+        height:15px;
+        transform:translateX(-250%);
+       display:absolute;
+       
+        background-size:contain;
+        background-position:center;
+        background-repeat: no-repeat;
+      position:absolute;
+    }
      .supersript
     {
         background-color:#EF7D21;
@@ -439,7 +502,7 @@ top:60%; left:6%;
         position:relative;
       
         border-radius:0px 16px 0px 0px;
-        height:94vh;
+        height:88.5vh;
         margin-top:0px;
         
       

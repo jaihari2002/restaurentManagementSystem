@@ -128,7 +128,7 @@ app.get('/home',isLoggedin, async(req, res) => {
 
     const admin=await User.findOne({username:'admin'},{})
    let cartCount=admin.userarr.length;
-  console.log(`cartCount:${cartCount}`)
+
     res.render('home.ejs',{item,user,cartCount});
   
 })

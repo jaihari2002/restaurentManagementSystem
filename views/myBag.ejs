@@ -19,7 +19,7 @@
                 <form action="/myBag" method="GET">
                     <button class="addBtn" style="color:#237DB6;"><var style="font-style:normal;">MY BAG<sup class="supersript" >    <%= bagCount%></sup></var></button>
                 </form> 
-              
+                <div class="rightBottomImg"></div>     
 </section>
 
 
@@ -108,7 +108,7 @@
                        
                        console.log(`showIn.value:${showIn.value},showIn.value:${show.value}`);
                        showIn.value=targetValue;
-                       alert(`showIn.value:${showIn.value},showIn.value:${show.value}`)
+                      
                     });
                    
 
@@ -146,6 +146,21 @@
             
             </script>
 <style>
+     .rightBottomImg
+ {
+   height:105px;
+   width:105px;
+   top:80%;
+   left:50%;
+   transform:translateX(-50%);
+   position:absolute;
+   background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Logo/mybagshop-white.png?raw=true');
+   background-size:contain;
+   background-repeat: no-repeat;
+ background-position:fit;
+ 
+
+ }
 .adminBg
 {
 background-color:#000000;
@@ -235,7 +250,7 @@ background-color:rgba(0,0,0,0.7);
 .popup
 {
     background-color: white;
-   position:absolute;
+   position:fixed;
 top:40%;
 left:45%;
 transform:translateX(-50%);
@@ -413,9 +428,9 @@ top: 7%;left:25%;
 body
 {
 background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
-
  background-size:cover;
  background-position:fit;
+ background-attachment:fixed;
 }
 .btn
 {
