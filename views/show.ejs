@@ -14,7 +14,7 @@
             <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form>
             <%}else{%>
                 <form action="/myBag" method="GET">
-                    <button class="addBtn"><var>MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
+                    <button class="addBtn" ><var style="font-style:normal;">MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
         </section>
@@ -66,9 +66,9 @@
 
 <% }else{%>
     
-    <form action="/buy" method="POST">
-        <button name="itemid" value="<%= item._id %>">BUY</button>
-    </form>    
+    <form action="/buy" class='form' method="POST" >
+        <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
+    </form>  
 
       
    
@@ -104,6 +104,35 @@ closeModal.addEventListener('click',function()
 
 </script>
 <style>
+
+.btns
+{
+    background-color:#237DB6;
+    border-radius:30px;
+   
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  
+    border-color:transparent;
+    color:white;
+    height:30px;
+    width:110px;
+    position:absolute;
+    top:45%; left:20%;
+}
+.btnImg
+    {
+        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/shopping-bag.png?raw=true');
+        /* background-color:white; */
+        width:15px;
+        height:15px;
+        transform:translateX(-200%);
+       display:absolute;
+        background-size:contain;
+      position:absolute;
+    }
+
      .supersript
     {
         background-color:#EF7D21;
@@ -181,7 +210,7 @@ color:white;
 }
     .arrow-box{
          position:relative;
-        background-color:white;
+        background-color:black;
          width:35px;
          height:35px;
          display:flex;
@@ -211,7 +240,7 @@ color:white;
         position:absolute;
         left:80%;
         top:17%;
-       background-color:white;
+        background-color:black;
          width:35px;
          height:35px;
          display:flex;
@@ -238,18 +267,19 @@ color:white;
     }
     .edit
     {
-        background-image:url("https://image.flaticon.com/icons/png/512/181/181540.png");
+        background-image:url("https://github.com/john-fermadez/step-images/blob/main/assets/Icons/pencil.png?raw=true");
    background-size:cover;
       position:absolute;
-   width:100%;
-   height:100%;
+    
+   width:50%;
+   height:50%;
     }
     .delete-box
     {
         position:absolute;
         left:80%;
         top:26%;
-       /* background-color:white; */
+        background-color:black;
          width:35px;
          height:35px;
          display:flex;
@@ -276,19 +306,19 @@ color:white;
     }
     .delete
     {
-        background-image:url("https://image.flaticon.com/icons/png/512/2089/2089743.png");
+        background-image:url("https://github.com/john-fermadez/step-images/blob/main/assets/Icons/delete.png?raw=true");
    background-size:cover;
       position:absolute;
-   width:100%;
-   height:100%;
+   width:50%;
+   height:50%;
     }
     .arrow
     {
-   background-image:url("https://image.flaticon.com/icons/png/512/507/507257.png");
+   background-image:url("https://github.com/john-fermadez/step-images/blob/main/assets/Icons/left-arrow.png?raw=true");
    background-size:cover;
       position:absolute;
-   width:25px;
-   height:25px;
+   width:50%;
+   height:50%;
   
     }
     .arrow-text

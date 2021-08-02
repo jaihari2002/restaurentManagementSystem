@@ -37,6 +37,7 @@ font-size: 14px;
   background-repeat: no-repeat !important;
   /* background-position: center; */
  background-size: cover !important;
+ background-position:fit;
  height: 100% !important;
     max-width:100% !important;
    min-height:100vh !important;
@@ -47,7 +48,7 @@ font-size: 14px;
 
 .a2img2{
     align-items: center !important;
-   
+     
 
 } 
 form{

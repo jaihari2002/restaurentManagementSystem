@@ -2,7 +2,9 @@
 
 <%layout('boilerplate')%>
 <title>HOME</title>
-<section class="right">
+
+<body style="background-image:url('<%= user.username ==  `admin` ?`https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg`:`https://github.com/john-fermadez/step-images/blob/main/assets/background-images/consumer.jpg?raw=true` %>');">
+<section class="right <%= user.username ==  `admin` ?`adminBg`:`userBg` %>" >
     <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
             <div class="circleBox" style="margin:29px;"> 
                 <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
@@ -13,26 +15,29 @@
             <form action="/additem" method="GET"><button class="addBtn">ADD ITEM</button></form>
             <%}else{%>
                 <form action="/myBag" method="GET">
-                    <button class="addBtn"><var>MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
+                    <button class="addBtn"><var style="font-style:normal;">MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
                 </form> 
                 <%}%>
 </section>
-<h6 style="display:inline;color:white; margin-left:15px; ">Hello,</h6><h3 style="display:inline;color:white ; " ><%=user.username%> </h3>
+<h6 style="display:inline-block;color:white; margin-left:27px;margin-bottom:24px;margin-top:27px;">Hello,</h6><h3 style="display:inline-block;color:white ; " ><%=user.username%> </h3>
 
 
 <div class='emptyContainerOuter <%= cartCount ==  0?``:"hide" %>'>
     <div class="gap ">
        
         <div class="emptyLogo" style="background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/bag-empty.png?raw=true');" ></div>
-        
+        <%if(user.username=='admin'){%>
         <h2 class="emptyMsg1"> YOUR STORE IS EMPTY<h6 class="emptyMsg2">Add Items to it now</h6></h2>
-        <form action="/home" method="GET"><button class="btns emptyBtn">ADD ITEM</button></form>
+        <form action="/additem" method="GET"><button class="btns emptyBtn">ADD ITEM</button></form>
+        <%} else{%>
+            <h2 class="emptyMsg1"> NO PRODUCTS ARE AVAILABLE<h6 class="emptyMsg2">AT THIS MOMENTS</h6></h2>  
+            <%}%>
     </div>
 </div>
 
 
 
-
+<%if(cartCount!=0){%>
     <div class='containerOuter'>
         <h4 class='menHeading' style="color:white;height:0;width:0;display:block;margin:2px;">MEN</h4>
         <br><br>
@@ -87,9 +92,15 @@
                     <button class="bigButton" type='submit' ></button>
                 </div>
             </form> 
+            <!-- < %= cartCount ==  0?``:"hide" %>'  -->
+            
             <% if (!(user.username==='admin')){ %>  
+                <%const arr=user.userarr;%>
+                <%for(let i=0;i<arr.length;i++){ %>
+                    <%console.log(`arr[${i}]=${arr[i]}`)%>
+                    <%  }%>
                 <form action="/buy" class='form' method="POST" >
-                    <button name="itemid" value="<%=itemIterator._id%>" class='btns' >BUY</button>
+                    <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
                 </form>    
                     <% } %> 
         </div>       
@@ -155,7 +166,7 @@
                     </form> 
                     <% if (!(user.username==='admin')){ %>  
                         <form action="/buy" class='form' method="POST" >
-                            <button name="itemid" value="<%= itemIterator._id %>" class='btns' >BUY</button>
+                            <button name="itemid" value="<%=itemIterator._id%>" class='btns' onclick="getId(this)" name="<%itemIterator.itemname%>"><div class="btnImg"> </div>BUY</button>
                         </form>    
                     
                     
@@ -165,20 +176,42 @@
                      <% } %>  
                      <% } %>
 
-
+<%}%>
    
 
               
-            
+</body>        
              
              
- 
-                
+ <!-- <script>
+    function getId(btns)
+            {
+               
+                btns.classList.add('dum');
+                btns.style.backgroundColor="black";
+                btns.style.textContent="ADDED";
+                btns.style.disable=true;
+            }
+</script>
+                 -->
 
 
 
 <style>
-    
+   
+   .adminBg
+{
+background-color:#000000;
+}
+.userBg
+{
+background-color:rgba(0,0,0,0.7);
+}
+    .disable
+    {
+    background-color:"black";
+   
+    }
 
  .emptyContainerOuter
     {
@@ -188,6 +221,7 @@
   border-radius:0px 16px 0px 0px;;
   margin-left:0px;
    width:78%;
+   height:88vh;
    position:relative;
    display:flex;
    flex-direction:row;
@@ -222,7 +256,7 @@
     {
         display:relative;;
         width:100%;
-        height:93vh;
+        height:100vh;
         /* background-color:blue; */
         color:white;
     }
@@ -321,12 +355,27 @@ top: 50%;left:6%;
 {
     background-color:#237DB6;
     border-radius:30px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+   margin-right:22px;
     border-color:transparent;
     color:white;
-    height:35px;
+    height:30px;
     width:110px;
 }
-
+.btnImg
+    {
+        background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Icons/shopping-bag.png?raw=true');
+        /* background-color:white; */
+        width:15px;
+        height:15px;
+        transform:translateX(-200%);
+       display:absolute;
+        background-size:contain;
+      position:absolute;
+    }
   .btn:hover
 {
  cursor:pointer;
@@ -365,16 +414,12 @@ top: 50%;left:6%;
 }
 
 
-.addAnchor:hover
-{
- cursor:pointer;
-}
+
 body
 {
-background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
- background-position:center;
- background-size:cover;
 
+ background-size:cover;
+ background-position:fit;
 }
 
 
@@ -383,7 +428,7 @@ background-image:url('https://raw.githubusercontent.com/john-fermadez/project/ma
     bottom:0px;
     left:20px;
     width:19%;
-    background-color:#000000;
+    
    position:fixed;
   left:81%;
     
@@ -426,6 +471,7 @@ background-image:url('https://raw.githubusercontent.com/john-fermadez/project/ma
 }
 .form{
     width:fit-content;
+    
 }
 .box:active
 {

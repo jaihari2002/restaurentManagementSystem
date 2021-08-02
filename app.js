@@ -154,8 +154,7 @@ app.post('/additem',isLoggedin,isAdmin, async (req, res) => {
   
     item.user=req.user._id;
     const itemId=req.body.itemid;
-    console.log(`itemId:${itemId}`)
-    console.log(`reqbody:${req.body}`)
+  
     const addedItemId=item._id;
     console.log(`added item id:${addedItemId}`);
     await User.updateOne({ username: `${req.user.username}` }, { $push : {"userarr" : addedItemId}});
