@@ -3,7 +3,9 @@ mongoose.connect('mongodb://localhost:27017/Mybag', {useNewUrlParser: true, useU
 .then(()=>{
     console.log("Connected to db");
 });
+// mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false
 const User=require('./userModel');
+const Order=require('./orderModel');
 const itemSchema=new mongoose.Schema({
     itemname:{
         type:String,
@@ -28,10 +30,7 @@ const itemSchema=new mongoose.Schema({
             type:String,
             required:true
         },
-    user:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User'
-        },
+   
     
 })
 const Item=mongoose.model('Item',itemSchema);

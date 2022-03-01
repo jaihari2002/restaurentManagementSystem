@@ -10,6 +10,7 @@
             </div>
             <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
             <form action="/additem" method="GET"><button style="color:#237DB6;" class="addBtn">ADD ITEM</button></form> 
+            <div class="rightBottomImg"></div>
         </section>
 
 
@@ -30,8 +31,8 @@
             <br>
 
             <select style="  margin-left:40px;" name="category" id="category"  class="border-curve inputLine" style="margin-left:0px;" value="<%=item.category%>" required>
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
+                <option value="Hot">Hot</option>
+                <option value="Cool">Cool</option>
             </select>
            
             <select name="rating" id="rating" class="border-curve inputLine" value="<%=item.rating%>" required>
@@ -59,7 +60,21 @@
 
 
         <style>
+.rightBottomImg
+ {
+   height:105px;
+   width:105px;
+   top:80%;
+   left:50%;
+   transform:translateX(-50%);
+   position:absolute;
+   background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMBp2quhUCNjoRTdhalGUikn29A6M6AvoeXw&usqp=CAU');
+   background-size:contain;
+   background-repeat: no-repeat;
+ background-position:fit;
+ 
 
+ }
 .right {
     height:100%;
     bottom:0px;
@@ -128,7 +143,7 @@ color:white;
 }
 body
 {
-background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
+background-image:url('https://s1.1zoom.me/big0/707/389949-svetik.jpg');
  background-position:center;
  background-size:cover;
 

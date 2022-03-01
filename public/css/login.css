@@ -23,17 +23,22 @@ font-size: 14px;
     margin-left: 10% !important;
     position: absolute !important;
        width: 80% !important;
+       flex-direction:row;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
        height: 80% !important;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    background: rgb(255, 255, 255,0.2);
-     backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
+    background: rgba(0, 0, 0,0.3);
+     /* backdrop-filter: blur(1px); */
+    /* -webkit-backdrop-filter: blur(1px); */
     z-index: -5 !important;
     fill-opacity: 0% !important;
 }
 
 #home-page{
-  background-image: url(img/login_register.jpg);
+  background-image: url("https://s1.1zoom.me/b3555/953/Fast_food_Hamburger_Meat_products_Vegetables_Fire_542285_3840x2400.jpg");
   background-repeat: no-repeat !important;
   /* background-position: center; */
  background-size: cover !important;
@@ -53,6 +58,7 @@ font-size: 14px;
 } 
 form{
     align-items: center !important;
+   
      width: 23%;
      z-index: 100 !important;
      fill-opacity: 1 !important;
@@ -60,17 +66,17 @@ form{
 
 input[type=text], input[type=password] {
     padding: 5px 10px 5px 20px !important;
-    border-radius:10px 10px 0px 0px !important;
+  
     text-align: left;
     opacity: 1;
     
 }
 .a1btn1{
-    background-color: #237DB6!important ;
+    background-color: black!important ;
     outline: none !important;
     
     border:#237DB6 !important;
-    border-radius: 30px;
+   
     color: white;
     padding: 10px !important;
     width: 100% !important;

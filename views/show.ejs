@@ -1,12 +1,13 @@
 <%layout('boilerplate')%>
 <title>SHOW</title>
+<body style="background-image:url('<%= user.username ==  `admin` ?`https://s1.1zoom.me/big0/707/389949-svetik.jpg`:`https://s1.1zoom.me/b5655/742/Fast_food_Hamburger_Vegetables_520537_1920x1080.jpg` %>');">
 <div class="overlay hidden"></div>
 
 <h6 style="display:inline-block;color:white; margin-left:27px;margin-bottom:24px;margin-top:27px;">Hello,</h6><h3 style="display:inline-block;color:white ; " ><%=user.username%> </h3>
    <section class="right">
             <form action="/logout" method="GET"><button class='logoutBtn'>LOGOUT</button></form>
             <div class="circleBox" style="margin:29px;"> 
-                <div class="circle" style="background-color:white;height:50px;width:50px;border-radius:100%;"></div>
+                <div class="circle" style="<%= user.username ==  `admin` ?`background:white;`:`background-size:cover;background-position:center;background-image:url('https://media4.giphy.com/media/5bGYUuT3VEVLa/200.gif');` %>  height:50px;width:50px;border-radius:100%;"></div>
                 <h6 style="color:white;margin-top:15px;margin-left:7px;"><%=user.username%> </h6>
             </div>
             <form action="/home" method="GET"><button style="top:210px;" class="addBtn util-up">HOME</button></form> 
@@ -15,6 +16,9 @@
             <%}else{%>
                 <form action="/myBag" method="GET">
                     <button class="addBtn" ><var style="font-style:normal;">MY BAG<sup class="supersript">    <%=user.userarr.length%></sup></var></button>
+                </form> 
+                <form action="/orderStatus" method="GET">
+                    <button class="addBtn orderBtn"><var style="font-style:normal;">MY ORDERS</button>
                 </form> 
                 <%}%>
                 <div class="rightBottomImg"></div>
@@ -59,7 +63,7 @@
 </div>
 
 <div class="delete-box">
-   <button class="deleteBtn show"></button>
+  <button class="deleteBtn show"></button>
 <div class="delete"></div>
 </div>
 
@@ -96,7 +100,7 @@
     <button class="close-modal btns blk" style="background-color:black;">CANCEL</button>
     <form method="POST" action="/deleteitem/<%=item._id%>?_method=DELETE" ><button class="deleteInPop" >DELETE</button></form> 
 </div>
-
+</body>
 
 
 <script>
@@ -128,7 +132,7 @@ closeModal.addEventListener('click',function()
    left:50%;
    transform:translateX(-50%);
    position:absolute;
-   background-image:url('https://github.com/john-fermadez/step-images/blob/main/assets/Logo/mybagshop-white.png?raw=true');
+   background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMBp2quhUCNjoRTdhalGUikn29A6M6AvoeXw&usqp=CAU');
    background-size:contain;
    background-repeat: no-repeat;
  background-position:fit;
@@ -507,6 +511,14 @@ top:60%; left:6%;
         
       
     }
+    .name
+{
+font-size:16px;
+font-weight:600;
+position:absolute;
+color:white;
+top: 7%;left:25%;
+}
     .addBtn
     {
         position:absolute;
@@ -517,6 +529,10 @@ top:60%; left:6%;
         color:white;
        border:none;
     }
+    .orderBtn
+{
+    top:310px;
+}
     .logoutBtn
     {
         position:absolute;
@@ -529,7 +545,7 @@ top:60%; left:6%;
     }
     body
     {
-    background-image:url('https://raw.githubusercontent.com/john-fermadez/project/main/assets/background-images/admin.jpg');
+    /* background-image:url('https://thumbs.dreamstime.com/z/front-mcdonalds-mcdonald-golden-arches-shop-sign-logo-128391053.jpg'); */
      background-position:center;
      background-size:cover;
     

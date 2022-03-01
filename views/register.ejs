@@ -8,12 +8,12 @@
                 <form class="mx-auto my-2" action="/register" method="POST">
                     
                     <label for="Username" class="form-label mb-1 mx-4">Username</label>
-                      <input type="text" class="form-control" id="Username" name="username">
+                      <input type="text" class="form-control" id="Username" name="username" autocomplete="off">
                      
                     <label for="Password" class="form-label mt-2 mb-1 mx-4">Password</label>
-                      <input type="password" class="form-control " id="Password" name="password" >
+                      <input type="password" class="form-control " id="Password" name="password" autocomplete="off" >
                       <label for="renterpassword" class="form-label mt-2 mb-1 mx-4">Renter Password</label>
-                      <input type="password" class="form-control " id="reenterpassword" name="reenterpassword" >
+                      <input type="password" class="form-control " id="reenterpassword" name="reenterpassword"  autocomplete="off">
                       <p class='error my-2 ms-5'><%=error%></p>
                       <button class="a1btn1 ">REGISTER</button>
                       

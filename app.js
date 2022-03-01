@@ -1,5 +1,5 @@
-const { render } = require('ejs');
 
+                     
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -21,6 +21,7 @@ const { isUser } = require('./views/middleware');
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%            require model as User and Item
 const User=require('./models/userModel');
 const Item=require('./models/itemModel');  
+const Order=require('./models/orderModel');  
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       using flash,ejsMate,express and making public and views as public folder
 const flash=require('connect-flash');
 const app = express();
@@ -209,11 +210,224 @@ app.post('/buy',isLoggedin,isUser, async(req, res) => {
     }
     const user=req.user;
 
-    res.render('myBag.ejs',{bagItem,user, bagCount});
+    res.render('myBag.ejs',{bagItem,user,bagCount});
    
 })
 
+app.get('/orderStatus',isLoggedin, async(req, res) => {
+    let  bagCount=0,s=0;
+    console.log('GET')
+    const user=req.user;
+    let order;
+  
+  
+    const currentUser=await User.findById(req.user);
+     try{
+         order=await Order.find({});
+        order=order[0];
+    for(let i of order.orderarr)
+    {
+     
+        bagCount++;
+    }
+ }catch(e){
+    
+     bagCount=0;
+    order=null;
+ }
 
+ let deliver=await Order.find({$or:[{username:`${user.username}`},{}]  });  
+  order=await Order.find({$or:[{username:`${user.username}`}]  }); 
+ console.log(user.username)
+ let orderObjectArray=[],orderBagArray=[],orderBag=[],deliverObjectArray=[],deliverBagArray=[],deliverBag=[];
+
+    console.log(deliver)
+    for(i of deliver)
+    {
+      deliverObjectArray[s++]=i.orderarr;
+    }
+    console.log(deliverObjectArray)
+   s=0;
+   for(let i=0;i<deliverObjectArray.length;i++)
+   {
+   for(let j=0;j<deliverObjectArray[i].length;j++)
+   {
+       deliverBagArray[s++]=deliverObjectArray[i][j];
+   }
+   
+   }
+   console.log(deliverBagArray)
+   s=0;
+   for(i of deliverBagArray){
+   deliverBag[s++]=await Item.findById(i);
+   }
+   s=0;
+   console.log(deliverBag)
+
+
+ for(i of order)
+ {
+   orderObjectArray[s++]=i.orderarr;
+ }
+s=0;
+for(let i=0;i<orderObjectArray.length;i++)
+{
+for(let j=0;j<orderObjectArray[i].length;j++)
+{
+    orderBagArray[s++]=orderObjectArray[i][j];
+}
+
+}
+s=0;
+for(i of orderBagArray){
+orderBag[s++]=await Item.findById(i);
+}
+s=0;
+
+
+ res.render('order.ejs',{order,user,bagCount,orderBag,deliverBag});
+})
+
+
+app.post('/orderStatus', async(req, res) => {
+   
+    try{    
+      
+        data=req.user._id;
+      
+        const currentUser=await User.findById(data);
+        const user=req.user;
+         let s=0,bagCount=0;
+    for(let i of currentUser.userarr)
+    {
+  
+        bagCount++;
+    }
+    
+       try{
+        // await Order.deleteMany();
+        await Order.create({ sent: false ,received:false, username: `${currentUser.username}` ,orderarr:currentUser.userarr});
+       }
+       catch(e)
+       {
+        await Order.create({ sent: false ,received:false, username: `${currentUser.username}` ,orderarr:currentUser.userarr});
+       }
+      
+        try{
+        let deliver=await Order.find({});   
+        let order=await Order.find({$or:[{username:`${user.username}`}]  }); 
+        let orderObjectArray=[],orderBagArray=[],orderBag=[],deliverObjectArray=[],deliverBagArray=[],deliverBag=[];
+   
+        // console.log(deliver)
+      for(i of deliver)
+      {
+        deliverObjectArray[s++]=i.orderarr;
+      }
+    //   console.log(deliverObjectArray)
+     s=0;
+     for(let i=0;i<deliverObjectArray.length;i++)
+     {
+     for(let j=0;j<deliverObjectArray[i].length;j++)
+     {
+         deliverBagArray[s++]=deliverObjectArray[i][j];
+     }
+     
+     }
+    //  console.log(deliverBagArray)
+     s=0;
+     for(i of deliverBagArray){
+     deliverBag[s++]=await Item.findById(i);
+     }
+     s=0;
+     console.log(deliverBag)
+
+
+
+
+
+
+      for(i of order)
+      {
+        orderObjectArray[s++]=i.orderarr;
+      }
+s=0;
+for(let i=0;i<orderObjectArray.length;i++)
+{
+    for(let j=0;j<orderObjectArray[i].length;j++)
+    {
+         orderBagArray[s++]=orderObjectArray[i][j];
+    }
+ 
+}
+s=0;
+for(i of orderBagArray){
+    orderBag[s++]=await Item.findById(i);
+  
+
+    }
+    s=0;
+ 
+        res.render('order.ejs',{order,user,bagCount,orderBag,deliverBag});
+// res.send(orderBag2)
+        }
+        catch(e)
+        {
+            res.send('erroe')
+        }
+                         
+                                 
+ 
+    
+        // const Order=await Order.find({});
+        //  console.log(Order)
+        //     console.log('orderStatus!!!!')
+           
+            // const user=new User({username});
+            // if(password !== reenterpassword){
+            //     req.flash('error','Passwords must be same');
+                
+            //     return  res.redirect('/register');
+            //   }
+            //   else{
+            //       //registering the password and username and redirecting to home page
+            //          const registeredUser= await User.register(user,password);
+            //          req.login(registeredUser,err=>{
+            //          if(err) return next(err);
+            //          });
+                  
+            //          res.redirect('/home');
+            //      }
+        }catch(e){
+            req.flash('error','User already exists');
+            return res.redirect('/register');
+        }
+});
+
+// app.post('',isLoggedin,isUser, async(req, res) => {
+//     console.log('orderStatus!!!')
+//     const items=req.body.i;
+//     console.log(items)
+ 
+// // res.send(items)
+//     // res.render('myBag.ejs',{bagItem,user, bagCount});
+   
+// })
+
+// app.get('/orderStatus',isLoggedin,isUser, async(req, res) => {
+//     let bagItem=[],s=0, bagCount=0;
+//     const user=req.user;
+//     const currentUser=await User.findById(req.user);
+//      try{
+//     for(let i of currentUser.userarr)
+//     {
+//         bagItem[s++]=await Item.findById(i);
+//         bagCount++;
+//     }
+//  }catch(e){
+//      res.send("nothing added to My bag");
+//  }
+//     res.render('myBag.ejs',{bagItem,user, bagCount});
+// })
 
 
 
@@ -236,7 +450,7 @@ app.get('/myBag',isLoggedin,isUser, async(req, res) => {
 })
 
 app.delete('/deleteBag/:id',isLoggedin,isUser,async(req,res)=>{
-    const {id}=req.params;
+    const {id}=req.params;                     
     await User.updateOne({username: `${req.user.username}`}, {$pull: { userarr: id }});
     const currentUser=await User.findById(req.user);
   

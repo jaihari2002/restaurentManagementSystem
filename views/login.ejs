@@ -4,14 +4,14 @@
       <div class="cointainer">
         <section id="home-page">
               <div id="new">
-                <img src="css/img/mybagshop-white.png" class="img-fluid my-5 align-center a2img2"  style="width: 20%;">
-                <form class="mx-auto" action="/login" method="POST">
+
+                <form class="mx-auto form" action="/login" method="POST">
                     
                     <label for="Username" class="form-label my-2 mx-4">Username</label>
-                      <input type="text" class="form-control " id="Username" name="username">
+                      <input type="text" class="form-control " id="Username" name="username" autocomplete="off">
                      
                       <label for="Password" class="form-label my-2 mx-4">Password</label>
-                      <input type="password" class="form-control " id="Password" name="password" >
+                      <input type="password" class="form-control " id="Password" name="password"  autocomplete="off">
                       <p class='error my-2 mx-2'><%=error%></p>
                       <button type="submit" class="a1btn1 mb-2 mt-1">LOGIN</button>
                       
